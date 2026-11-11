@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build-manager:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
           print('MANAGER_NDK=' + versions['versions']['ndk'])
           PY
       - name: Install manager toolchain
-        run: sdkmanager --install "platforms;android-${MANAGER_SDK}" "build-tools;${MANAGER_BUILD_TOOLS}" "ndk;${MANAGER_NDK}" 'cmake;3.22.1'
+        run: sdkmanager --install "platforms;android-${MANAGER_SDK}.0" "build-tools;${MANAGER_BUILD_TOOLS}" "ndk;${MANAGER_NDK}" 'cmake;3.22.1'
       - name: Build manager debug APK
         working-directory: manager
         run: |
