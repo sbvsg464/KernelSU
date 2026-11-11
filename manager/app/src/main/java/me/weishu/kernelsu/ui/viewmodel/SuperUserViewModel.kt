@@ -177,10 +177,7 @@ class SuperUserViewModel(
     }
 
     fun toggleShowSystemApps(): Job {
-        val newValue = !_uiState.value.showSystemApps
-        settingsRepo.superuserShowSystemApps = newValue
-        _uiState.update { it.copy(showSystemApps = newValue) }
-        return refilterVisibleApps()
+        return viewModelScope.launch { }
     }
 
     fun toggleShowOnlyPrimaryUserApps(): Job {
@@ -283,22 +280,7 @@ class SuperUserViewModel(
     }
 
     private fun filterApps(list: List<AppInfo>): List<AppInfo> {
-        val currentState = _uiState.value
-
-        return list.filter {
-            if (it.packageName == ksuApp.packageName) return@filter false
-            // UID 1053 is the single system-wide WebView zygote (primary user only).
-            if (it.isWebViewZygote) return@filter true
-            if (it.allowSu || it.hasCustomProfile) {
-                return@filter true
-            }
-            val userFilter = !currentState.showOnlyPrimaryUserApps || it.uid / 100000 == 0
-            val isSystemApp = it.packageInfo.applicationInfo!!.flags.and(ApplicationInfo.FLAG_SYSTEM) != 0
-            val typeFilter = it.uid == 2000
-                    || currentState.showSystemApps
-                    || !isSystemApp
-            userFilter && typeFilter
-        }
+        return list
     }
 
     private fun buildCachedGroups(apps: List<AppInfo>): List<GroupedApps> {

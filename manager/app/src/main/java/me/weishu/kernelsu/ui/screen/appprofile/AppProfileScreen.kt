@@ -114,28 +114,10 @@ fun AppProfileScreen(uid: Int) {
                 } else {
                     updatedProfile
                 }
-                if (profileToSave.allowSu) {
-                    if (uid < 2000 && uid != 1000) {
-                        showMessage(suNotAllowed)
-                        return@launch
-                    }
-                    if (!profileToSave.rootUseDefault
-                        && profileToSave.rules.isNotEmpty()
-                        && !primaryAppInfo.special
-                        && !setSepolicy(profileToSave.name, profileToSave.rules)
-                    ) {
-                        showMessage(failToUpdateSepolicy)
-                        return@launch
-                    }
-                }
-                if (!Natives.setAppProfile(profileToSave)) {
-                    showMessage(failToUpdateAppProfile)
-                } else {
-                    profile = profileToSave
-                    if (uiMode == UiMode.Material) {
-                        viewModel.loadAppList()
-                    }
-                }
+                me.weishu.kernelsu.data.repository.LocalAppSelections.save(profileToSave)
+                profile = profileToSave
+                viewModel.loadAppList()
+
             }
         },
     )

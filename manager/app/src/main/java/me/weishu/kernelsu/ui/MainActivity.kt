@@ -319,7 +319,7 @@ fun MainScreen(
     var userScrollEnabled by remember { mutableStateOf(true) }
 
     val enableNavigationBadge = LocalEnableNavigationBadge.current
-    val badgeEnabled = enableNavigationBadge && isFullFeatured
+    val badgeEnabled = enableNavigationBadge
     val moduleViewModel = viewModel<ModuleViewModel>()
     val moduleUiState by moduleViewModel.uiState.collectAsStateWithLifecycle()
 

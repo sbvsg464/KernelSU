@@ -221,8 +221,8 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_sucompat_summary)
                             }
                             OverlayDropdownPreference(
-                                title = stringResource(id = R.string.settings_sucompat) + "（演示）",
-                                summary = suSummary,
+                                title = stringResource(id = R.string.settings_sucompat),
+                                summary = suSummary + "\n本页特权开关仅保存本地状态，不应用到内核。",
                                 items = suCompatModeItems,
                                 startAction = {
                                     Icon(
@@ -244,7 +244,7 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_kernel_umount_summary)
                             }
                             SwitchPreference(
-                                title = stringResource(id = R.string.settings_kernel_umount) + "（演示）",
+                                title = stringResource(id = R.string.settings_kernel_umount),
                                 summary = umountSummary,
                                 startAction = {
                                     Icon(
@@ -266,7 +266,7 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_selinux_hide_summary)
                             }
                             SwitchPreference(
-                                title = stringResource(id = R.string.settings_selinux_hide) + "（演示）",
+                                title = stringResource(id = R.string.settings_selinux_hide),
                                 summary = selinuxHideSummary,
                                 startAction = {
                                     Icon(
@@ -288,7 +288,7 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_sulog_summary)
                             }
                             SwitchPreference(
-                                title = stringResource(id = R.string.settings_sulog) + "（演示）",
+                                title = stringResource(id = R.string.settings_sulog),
                                 summary = sulogSummary,
                                 startAction = {
                                     Icon(
@@ -310,7 +310,7 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_adb_root_summary)
                             }
                             SwitchPreference(
-                                title = stringResource(id = R.string.settings_adb_root) + "（演示）",
+                                title = stringResource(id = R.string.settings_adb_root),
                                 summary = adbRootSummary,
                                 startAction = {
                                     Icon(
@@ -332,7 +332,7 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_shell_su_adb_only_summary)
                             }
                             SwitchPreference(
-                                title = stringResource(id = R.string.settings_shell_su_adb_only) + "（演示）",
+                                title = stringResource(id = R.string.settings_shell_su_adb_only),
                                 summary = shellSuAdbOnlySummary,
                                 startAction = {
                                     Icon(

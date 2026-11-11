@@ -24,6 +24,17 @@ fun SuperUserPager(
     bottomInnerPadding: Dp,
     isCurrentPage: Boolean = true,
 ) {
+    val consentPrefs = rememberSaveable { mutableStateOf(false) }
+    if (!consentPrefs.value) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = {},
+            title = { androidx.compose.material3.Text("访问应用列表") },
+            text = { androidx.compose.material3.Text("允许读取已安装应用，用于本地勾选和计数。勾选不会授予 Root 权限。") },
+            confirmButton = { androidx.compose.material3.TextButton(onClick = { consentPrefs.value = true }) { androidx.compose.material3.Text("允许") } },
+            dismissButton = { androidx.compose.material3.TextButton(onClick = { navigator.pop() }) { androidx.compose.material3.Text("取消") } },
+        )
+        return
+    }
     val viewModel = viewModel<SuperUserViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val latestIsCurrentPage by rememberUpdatedState(isCurrentPage)

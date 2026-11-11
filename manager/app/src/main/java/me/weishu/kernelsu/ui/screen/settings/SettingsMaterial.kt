@@ -190,8 +190,8 @@ fun SettingPagerMaterial(
                             }
                             SegmentedDropdownItem(
                                 icon = Icons.Filled.AdminPanelSettings,
-                                title = stringResource(id = R.string.settings_sucompat) + "（演示）",
-                                summary = suSummary,
+                                title = stringResource(id = R.string.settings_sucompat),
+                                summary = suSummary + "\n本页特权开关仅保存本地状态，不应用到内核。",
                                 items = suCompatModeItems,
                                 enabled = true,
                                 selectedIndex = uiState.suCompatMode,
@@ -207,7 +207,7 @@ fun SettingPagerMaterial(
                             }
                             SegmentedSwitchItem(
                                 icon = Icons.Filled.LayersClear,
-                                title = stringResource(id = R.string.settings_kernel_umount) + "（演示）",
+                                title = stringResource(id = R.string.settings_kernel_umount),
                                 summary = umountSummary,
                                 enabled = true,
                                 checked = uiState.isKernelUmountEnabled,
@@ -223,7 +223,7 @@ fun SettingPagerMaterial(
                             }
                             SegmentedSwitchItem(
                                 icon = Icons.Filled.Security,
-                                title = stringResource(id = R.string.settings_selinux_hide) + "（演示）",
+                                title = stringResource(id = R.string.settings_selinux_hide),
                                 summary = selinuxHideSummary,
                                 enabled = true,
                                 checked = uiState.isSelinuxHideEnabled,
@@ -239,7 +239,7 @@ fun SettingPagerMaterial(
                             }
                             SegmentedSwitchItem(
                                 icon = Icons.AutoMirrored.Filled.Article,
-                                title = stringResource(id = R.string.settings_sulog) + "（演示）",
+                                title = stringResource(id = R.string.settings_sulog),
                                 summary = sulogSummary,
                                 enabled = true,
                                 checked = uiState.isSulogEnabled,
@@ -255,7 +255,7 @@ fun SettingPagerMaterial(
                             }
                             SegmentedSwitchItem(
                                 icon = Icons.Filled.Adb,
-                                title = stringResource(id = R.string.settings_adb_root) + "（演示）",
+                                title = stringResource(id = R.string.settings_adb_root),
                                 summary = adbRootSummary,
                                 enabled = true,
                                 checked = uiState.isAdbRootEnabled,
@@ -271,7 +271,7 @@ fun SettingPagerMaterial(
                             }
                             SegmentedSwitchItem(
                                 icon = Icons.Filled.VerifiedUser,
-                                title = stringResource(id = R.string.settings_shell_su_adb_only) + "（演示）",
+                                title = stringResource(id = R.string.settings_shell_su_adb_only),
                                 summary = shellSuAdbOnlySummary,
                                 enabled = true,
                                 checked = uiState.isShellSuAdbOnlyEnabled,
