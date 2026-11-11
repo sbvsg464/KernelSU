@@ -357,11 +357,9 @@ fun MainScreen(
         startupPreloadStarted = true
     }
 
-    // Loading the app list just for a badge is too expensive; read the kernel allowlist instead.
-    var superuserCount by remember { mutableIntStateOf(0) }
-    LaunchedEffect(badgeEnabled, grantedUidCount) {
-        superuserCount = if (badgeEnabled) withContext(Dispatchers.IO) { getSuperuserCount() } else 0
-    }
+    val localSelectionCount by me.weishu.kernelsu.data.repository.LocalAppSelections.count.collectAsStateWithLifecycle()
+    val superuserCount = if (badgeEnabled) localSelectionCount else 0
+
 
     val navigationBadge = if (badgeEnabled) {
         NavigationBadgeState(

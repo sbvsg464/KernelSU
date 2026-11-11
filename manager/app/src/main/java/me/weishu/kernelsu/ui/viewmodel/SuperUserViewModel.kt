@@ -107,7 +107,7 @@ class SuperUserViewModel(
             repo: SuperUserRepository = SuperUserRepositoryImpl(),
         ): Result<Pair<List<AppInfo>, List<Int>>> {
             val scan = synchronized(appsLock) {
-                if (useCache && cachedApps.isNotEmpty()) return Result.success(cachedApps to cachedUserIds)
+                if (cachedApps.isNotEmpty()) return Result.success(cachedApps to cachedUserIds)
                 appListScan?.takeIf { it.isActive } ?: scanScope.async {
                     repo.getAppList()
                         .onSuccess { (apps, ids) ->

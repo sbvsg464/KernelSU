@@ -28,13 +28,14 @@ import kotlin.coroutines.resume
 class SuperUserRepositoryImpl : SuperUserRepository {
 
     companion object {
+        private var packageCache: List<android.content.pm.PackageInfo>? = null
         private const val TAG = "SuperUserRepository"
     }
 
     override suspend fun getAppList(): Result<Pair<List<AppInfo>, List<Int>>> = withContext(Dispatchers.IO) {
         runCatching {
             val pm = ksuApp.packageManager
-            val packages = pm.getInstalledPackages(0)
+            val packages = packageCache ?: pm.getInstalledPackages(0).also { packageCache = it }
             val apps = packages.mapNotNull { info ->
                 val ai = info.applicationInfo ?: return@mapNotNull null
                 AppInfo(label = ai.loadLabel(pm).toString(), packageInfo = info,
