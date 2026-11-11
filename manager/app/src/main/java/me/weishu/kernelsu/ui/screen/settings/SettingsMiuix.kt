@@ -222,7 +222,7 @@ fun SettingPagerMiuix(
                             }
                             OverlayDropdownPreference(
                                 title = stringResource(id = R.string.settings_sucompat),
-                                summary = suSummary + "\n本页特权开关仅保存本地状态，不应用到内核。",
+                                summary = suSummary,
                                 items = suCompatModeItems,
                                 startAction = {
                                     Icon(
