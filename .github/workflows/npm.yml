@@ -1,8 +1,6 @@
 name: Publish NPM package
 
 on:
-  push:
-    branches:
       - main
     paths:
       - 'js/package.json'

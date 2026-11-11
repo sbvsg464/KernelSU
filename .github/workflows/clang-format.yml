@@ -1,8 +1,6 @@
 name: ClangFormat check
 
 on:
-  push:
-    branches:
       - 'main'
       - 'dev'
     paths:
@@ -10,7 +8,6 @@ on:
       - 'kernel/**/*.c'
       - 'kernel/**/*.h'
   pull_request:
-    branches:
       - 'main'
       - 'dev'
     paths:

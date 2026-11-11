@@ -1,8 +1,6 @@
 name: Deploy Website
 
 on:
-  push:
-    branches:
       - main
       - website
     paths:
