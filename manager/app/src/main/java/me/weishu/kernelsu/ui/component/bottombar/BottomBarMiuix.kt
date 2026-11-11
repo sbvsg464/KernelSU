@@ -47,8 +47,7 @@ fun BottomBarMiuix(
     navigationBadge: NavigationBadgeState,
     modifier: Modifier,
 ) {
-    val fullFeatured = Natives.isFullFeatured()
-    if (!fullFeatured) return
+    // Navigation remains available without a connected backend.
 
     val mainState = LocalMainPagerState.current
     val enableFloatingBottomBar = LocalEnableFloatingBottomBar.current

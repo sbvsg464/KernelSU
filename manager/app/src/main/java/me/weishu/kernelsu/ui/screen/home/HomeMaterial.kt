@@ -219,14 +219,7 @@ private fun StatusCard(
             notInstalled -> stringResource(R.string.home_click_to_install)
             else -> stringResource(R.string.home_unsupported_reason)
         }
-        val workingMode = if (ksuActive) {
-            when (state.lkmMode) {
-                null -> ""
-                true -> "LKM"
-                else -> "GKI"
-            }
-        } else ""
-
+        val workingMode = "LKM[${stringResource(R.string.jailbreak_mode)}]"
         val statusTrailing: (@Composable () -> Unit)? = if (ksuActive && workingMode.isNotEmpty()) {
             {
                 StatusTag(

@@ -253,11 +253,7 @@ private fun StatusCard(
                         append(" [${stringResource(id = R.string.jailbreak_mode)}]")
                     }
                 }
-                val workingMode = when (state.lkmMode) {
-                    null -> null
-                    true -> "LKM"
-                    else -> "GKI"
-                }
+                val workingMode = "LKM[${stringResource(R.string.jailbreak_mode)}]"
                 val workingText = "${stringResource(id = R.string.home_working)}$workingState"
 
                 Row(

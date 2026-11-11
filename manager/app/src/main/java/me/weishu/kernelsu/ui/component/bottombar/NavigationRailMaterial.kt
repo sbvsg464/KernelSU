@@ -47,8 +47,7 @@ fun NavigationRailMaterial(
     navigationBadge: NavigationBadgeState,
     modifier: Modifier = Modifier,
 ) {
-    val fullFeatured = Natives.isFullFeatured()
-    if (!fullFeatured) return
+    // Navigation remains available without a connected backend.
 
     val mainPagerState = LocalMainPagerState.current
 

@@ -20,8 +20,7 @@ fun NavigationRailMiuix(
     navigationBadge: NavigationBadgeState,
     modifier: Modifier = Modifier,
 ) {
-    val fullFeatured = Natives.isFullFeatured()
-    if (!fullFeatured) return
+    // Navigation remains available without a connected backend.
 
     val mainState = LocalMainPagerState.current
 

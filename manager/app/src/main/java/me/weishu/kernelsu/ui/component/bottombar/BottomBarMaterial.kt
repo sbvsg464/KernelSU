@@ -32,8 +32,7 @@ import me.weishu.kernelsu.ui.LocalMainPagerState
 
 @Composable
 fun BottomBarMaterial(navigationBadge: NavigationBadgeState) {
-    val fullFeatured = Natives.isFullFeatured()
-    if (!fullFeatured) return
+    // Navigation remains available without a connected backend.
 
     val mainPagerState = LocalMainPagerState.current
 

@@ -316,7 +316,7 @@ fun MainScreen(
         PagerInterceptionMode.Native
     }
     val interceptPagerGestures = pagerMode == PagerInterceptionMode.CrossAxisInterceptor
-    var userScrollEnabled by remember(isFullFeatured) { mutableStateOf(isFullFeatured) }
+    var userScrollEnabled by remember { mutableStateOf(true) }
 
     val enableNavigationBadge = LocalEnableNavigationBadge.current
     val badgeEnabled = enableNavigationBadge && isFullFeatured
