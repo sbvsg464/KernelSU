@@ -3,8 +3,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+
 permissions:
   contents: read
+
 jobs:
   build-manager:
     runs-on: ubuntu-latest
@@ -23,7 +25,13 @@ jobs:
           SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -name sdkmanager -type f | sort -V | tail -1)"
           test -x "$SDKMANAGER"
           yes | "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --licenses >/dev/null || true
-          "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --install             platform-tools             'platforms;android-37'             'build-tools;37.0.0'             'ndk;29.0.14206865'             'cmake;3.22.1'
+          # 修改了这里的版本号，改为真实存在的最新版本
+          "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --install \
+            platform-tools \
+            'platforms;android-34' \
+            'build-tools;34.0.0' \
+            'ndk;26.1.10909125' \
+            'cmake;3.22.1'
       - name: Build manager debug APK
         working-directory: manager
         run: chmod +x gradlew && ./gradlew :app:assembleDebug --no-daemon --stacktrace
