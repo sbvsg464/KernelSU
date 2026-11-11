@@ -2,41 +2,47 @@ name: Build Manager
 on:
   push:
     branches: [main]
+    paths: ['manager/**', '.github/workflows/build-manager.yml']
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: manager-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   build-manager:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
-
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v4   # 升级到 v4，修复 tools 报错
-
-      - name: Install manager SDK packages
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Read manager toolchain versions
         shell: bash
         run: |
-          set -o pipefail
-          SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -name sdkmanager -type f | sort -V | tail -1)"
-          test -x "$SDKMANAGER"
-          yes | "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --licenses >/dev/null || true
-          # 改用 Google 当前实际提供的稳定版本
-          "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --install \
-            platform-tools \
-            'platforms;android-35' \
-            'build-tools;35.0.0' \
-            'ndk;27.1.12297006' \
-            'cmake;3.22.1'
-
+          python3 - <<'PY' >> "$GITHUB_ENV"
+          import pathlib, re, tomllib
+          root = pathlib.Path('manager')
+          build = (root / 'build.gradle.kts').read_text()
+          for key, name in [('androidCompileSdkVersion', 'MANAGER_SDK'), ('androidBuildToolsVersion', 'MANAGER_BUILD_TOOLS')]:
+              match = re.search(r'extra\["' + key + r'"\]\s*=\s*"?([0-9.]+)', build)
+              if not match:
+                  raise SystemExit('Missing toolchain setting: ' + key)
+              print(name + '=' + match.group(1))
+          versions = tomllib.loads((root / 'gradle/libs.versions.toml').read_text())
+          print('MANAGER_NDK=' + versions['versions']['ndk'])
+          PY
+      - name: Install manager toolchain
+        run: sdkmanager --install "platforms;android-${MANAGER_SDK}" "build-tools;${MANAGER_BUILD_TOOLS}" "ndk;${MANAGER_NDK}" 'cmake;3.22.1'
       - name: Build manager debug APK
         working-directory: manager
-        run: chmod +x gradlew && ./gradlew :app:assembleDebug --no-daemon --stacktrace
-
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:assembleDebug --no-daemon --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: kernelsu-manager-debug
