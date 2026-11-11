@@ -60,14 +60,9 @@ fun AppProfileScreen(uid: Int) {
     }
 
     val initialProfile = remember(uid, packageName, primaryAppInfo.special) {
-        Natives.getAppProfile(packageName, uid).let {
-            if (primaryAppInfo.special) it.copy(allowSu = false) else it
-        }.also {
-            if (it.allowSu && !primaryAppInfo.special) {
-                it.rules = getSepolicy(packageName)
-            }
-        }
+        me.weishu.kernelsu.data.repository.LocalAppSelections.profile(packageName, uid)
     }
+
     var profile by rememberSaveable(uid, packageName) {
         mutableStateOf(initialProfile)
     }
