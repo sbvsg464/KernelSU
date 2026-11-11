@@ -16,8 +16,14 @@ jobs:
           java-version: '21'
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
-        with:
-          packages: 'platform-tools platforms;android-37 build-tools;37.0.0 ndk;29.0.14206865 cmake;3.22.1'
+      - name: Install manager SDK packages
+        shell: bash
+        run: |
+          set -o pipefail
+          SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -name sdkmanager -type f | sort -V | tail -1)"
+          test -x "$SDKMANAGER"
+          yes | "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --licenses >/dev/null || true
+          "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --install             platform-tools             'platforms;android-37'             'build-tools;37.0.0'             'ndk;29.0.14206865'             'cmake;3.22.1'
       - name: Build manager debug APK
         working-directory: manager
         run: chmod +x gradlew && ./gradlew :app:assembleDebug --no-daemon --stacktrace
