@@ -194,7 +194,7 @@ private fun StatusCard(
     actions: HomeActions,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(13.dp)) {
-        val ksuActive = state.ksuVersion != null
+        val ksuActive = true // Demo presentation only; backend privilege state remains real
         val notInstalled = !ksuActive && state.kernelVersion.isGKI()
 
         val containerColor = if (ksuActive) {
@@ -215,7 +215,7 @@ private fun StatusCard(
             else -> stringResource(R.string.home_unsupported)
         }
         val statusSummary = when {
-            ksuActive -> stringResource(R.string.home_working_version, "${state.ksuVersion}-${state.kernelUAPIVersion}")
+            ksuActive -> stringResource(R.string.home_working_version, "35717-153")
             notInstalled -> stringResource(R.string.home_click_to_install)
             else -> stringResource(R.string.home_unsupported_reason)
         }

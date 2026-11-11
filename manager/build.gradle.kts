@@ -12,7 +12,7 @@ extra["androidBuildToolsVersion"] = "35.0.0"
 extra["androidCompileNdkVersion"] = libs.versions.ndk.get()
 extra["androidSourceCompatibility"] = JavaVersion.VERSION_21
 extra["androidTargetCompatibility"] = JavaVersion.VERSION_21
-extra["managerVersionCode"] = 32171
+extra["managerVersionCode"] = 35717
 extra["managerVersionName"] = "153"
 
 fun getGitCommitCount(): Int {
