@@ -19,7 +19,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - uses: android-actions/setup-android@v3
+      - name: Use runner Android SDK
+        run: |
+          test -n "$ANDROID_HOME"
+          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
       - uses: gradle/actions/setup-gradle@v4
       - name: Read manager toolchain versions
         shell: bash
