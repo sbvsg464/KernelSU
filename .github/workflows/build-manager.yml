@@ -19,7 +19,7 @@ jobs:
           SDKMANAGER=$(find "$ANDROID_SDK_ROOT/cmdline-tools" -name sdkmanager -type f | sort -V | tail -1)
           test -n "$SDKMANAGER"
           yes | "$SDKMANAGER" --sdk_root="$ANDROID_SDK_ROOT" --licenses >/dev/null || true
-          "$SDKMANAGER" --sdk_root="$ANDROID_SDK_ROOT" --install platform-tools 'platforms;android-35' 'build-tools;35.0.0'
+          "$SDKMANAGER" --sdk_root="$ANDROID_SDK_ROOT" --install platform-tools 'platforms;android-37' 'build-tools;37.0.0' 'ndk;29.0.14206865' 'cmake;3.22.1'
       - name: Build manager debug APK
         working-directory: manager
         run: chmod +x gradlew && ./gradlew :app:assembleDebug --no-daemon --stacktrace
