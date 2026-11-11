@@ -209,7 +209,7 @@ fun SettingPagerMaterial(
                                 icon = Icons.Filled.LayersClear,
                                 title = stringResource(id = R.string.settings_kernel_umount),
                                 summary = umountSummary,
-                                enabled = uiState.kernelUmountStatus == "supported",
+                                enabled = true,
                                 checked = uiState.isKernelUmountEnabled,
                                 onCheckedChange = actions.onSetKernelUmountEnabled
                             )
@@ -225,7 +225,7 @@ fun SettingPagerMaterial(
                                 icon = Icons.Filled.Security,
                                 title = stringResource(id = R.string.settings_selinux_hide),
                                 summary = selinuxHideSummary,
-                                enabled = uiState.selinuxHideStatus == "supported",
+                                enabled = true,
                                 checked = uiState.isSelinuxHideEnabled,
                                 onCheckedChange = actions.onSetSelinuxHideEnabled
                             )
@@ -241,7 +241,7 @@ fun SettingPagerMaterial(
                                 icon = Icons.AutoMirrored.Filled.Article,
                                 title = stringResource(id = R.string.settings_sulog),
                                 summary = sulogSummary,
-                                enabled = uiState.sulogStatus == "supported",
+                                enabled = true,
                                 checked = uiState.isSulogEnabled,
                                 onCheckedChange = actions.onSetSulogEnabled
                             )
@@ -257,7 +257,7 @@ fun SettingPagerMaterial(
                                 icon = Icons.Filled.Adb,
                                 title = stringResource(id = R.string.settings_adb_root),
                                 summary = adbRootSummary,
-                                enabled = uiState.adbRootStatus == "supported",
+                                enabled = true,
                                 checked = uiState.isAdbRootEnabled,
                                 onCheckedChange = actions.onSetAdbRootEnabled
                             )
@@ -273,7 +273,7 @@ fun SettingPagerMaterial(
                                 icon = Icons.Filled.VerifiedUser,
                                 title = stringResource(id = R.string.settings_shell_su_adb_only),
                                 summary = shellSuAdbOnlySummary,
-                                enabled = uiState.shellSuAdbOnlyStatus == "supported",
+                                enabled = true,
                                 checked = uiState.isShellSuAdbOnlyEnabled,
                                 onCheckedChange = actions.onSetShellSuAdbOnlyEnabled
                             )
@@ -283,7 +283,7 @@ fun SettingPagerMaterial(
                                 icon = Icons.Filled.RestartAlt,
                                 title = stringResource(id = R.string.settings_soft_reboot),
                                 summary = stringResource(id = R.string.settings_soft_reboot_summary),
-                                enabled = !uiState.isLateLoadMode,
+                                enabled = true,
                                 checked = uiState.isLateLoadMode || uiState.useSoftReboot,
                                 onCheckedChange = actions.onSetUseSoftReboot
                             )
@@ -317,7 +317,7 @@ fun SettingPagerMaterial(
                                 icon = Icons.Filled.FlashOn,
                                 title = stringResource(id = R.string.settings_auto_jailbreak),
                                 summary = stringResource(id = R.string.settings_auto_jailbreak_summary),
-                                enabled = uiState.isLateLoadMode,
+                                enabled = true,
                                 checked = uiState.autoJailbreak,
                                 onCheckedChange = actions.onSetAutoJailbreak
                             )
@@ -334,7 +334,7 @@ fun SettingPagerMaterial(
                             val uninstall = stringResource(id = R.string.settings_uninstall)
                             SegmentedListItem(
                                 onClick = { showUninstallDialog.value = true },
-                                enabled = !uiState.isLateLoadMode,
+                                enabled = true,
                                 headlineContent = { Text(uninstall) },
                                 leadingContent = { Icon(Icons.Filled.Delete, uninstall) }
                             )

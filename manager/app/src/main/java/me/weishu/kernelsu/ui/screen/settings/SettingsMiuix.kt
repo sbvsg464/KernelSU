@@ -254,7 +254,7 @@ fun SettingPagerMiuix(
                                         tint = colorScheme.onBackground
                                     )
                                 },
-                                enabled = uiState.kernelUmountStatus == "supported",
+                                enabled = true,
                                 checked = uiState.isKernelUmountEnabled,
                                 onCheckedChange = actions.onSetKernelUmountEnabled
                             )
@@ -276,7 +276,7 @@ fun SettingPagerMiuix(
                                         tint = colorScheme.onBackground
                                     )
                                 },
-                                enabled = uiState.selinuxHideStatus == "supported",
+                                enabled = true,
                                 checked = uiState.isSelinuxHideEnabled,
                                 onCheckedChange = actions.onSetSelinuxHideEnabled
                             )
@@ -298,7 +298,7 @@ fun SettingPagerMiuix(
                                         tint = if (uiState.sulogStatus == "supported") colorScheme.onBackground else colorScheme.disabledOnSecondaryVariant
                                     )
                                 },
-                                enabled = uiState.sulogStatus == "supported",
+                                enabled = true,
                                 checked = uiState.isSulogEnabled,
                                 onCheckedChange = actions.onSetSulogEnabled
                             )
@@ -320,7 +320,7 @@ fun SettingPagerMiuix(
                                         tint = colorScheme.onBackground
                                     )
                                 },
-                                enabled = uiState.adbRootStatus == "supported",
+                                enabled = true,
                                 checked = uiState.isAdbRootEnabled,
                                 onCheckedChange = actions.onSetAdbRootEnabled
                             )
@@ -342,7 +342,7 @@ fun SettingPagerMiuix(
                                         tint = if (uiState.shellSuAdbOnlyStatus == "supported") colorScheme.onBackground else colorScheme.disabledOnSecondaryVariant
                                     )
                                 },
-                                enabled = uiState.shellSuAdbOnlyStatus == "supported",
+                                enabled = true,
                                 checked = uiState.isShellSuAdbOnlyEnabled,
                                 onCheckedChange = actions.onSetShellSuAdbOnlyEnabled
                             )
@@ -357,7 +357,7 @@ fun SettingPagerMiuix(
                                         tint = if (uiState.isLateLoadMode) colorScheme.disabledOnSecondaryVariant else colorScheme.onBackground
                                     )
                                 },
-                                enabled = !uiState.isLateLoadMode,
+                                enabled = true,
                                 checked = uiState.isLateLoadMode || uiState.useSoftReboot,
                                 onCheckedChange = actions.onSetUseSoftReboot
                             )
@@ -408,7 +408,7 @@ fun SettingPagerMiuix(
                                         tint = if (uiState.isLateLoadMode) colorScheme.onBackground else colorScheme.disabledOnSecondaryVariant
                                     )
                                 },
-                                enabled = uiState.isLateLoadMode,
+                                enabled = true,
                                 checked = uiState.autoJailbreak,
                                 onCheckedChange = actions.onSetAutoJailbreak
                             )
@@ -424,7 +424,7 @@ fun SettingPagerMiuix(
                             val uninstall = stringResource(id = R.string.settings_uninstall)
                             ArrowPreference(
                                 title = uninstall,
-                                enabled = !uiState.isLateLoadMode,
+                                enabled = true,
                                 startAction = {
                                     Icon(
                                         Icons.Rounded.Delete,
