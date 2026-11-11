@@ -23,6 +23,7 @@ class SettingsViewModel(
     private val repo: SettingsRepository = SettingsRepositoryImpl()
 ) : ViewModel() {
 
+    private val demoPrefs = ksuApp.getSharedPreferences("demo_feature_settings", 0)
     private val _uiState = MutableStateFlow(SettingsUiState())
     val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
 
@@ -113,22 +114,22 @@ class SettingsViewModel(
                     colorStyle = colorStyle,
                     colorSpec = colorSpec,
                     suCompatStatus = suCompatStatus,
-                    suCompatMode = suCompatMode,
+                    suCompatMode = demoPrefs.getInt("suCompatMode", 0),
                     isSuEnabled = isSuEnabled,
                     adbRootStatus = adbRootStatus,
-                    isAdbRootEnabled = isAdbRootEnabled,
+                    isAdbRootEnabled = demoPrefs.getBoolean("isAdbRootEnabled", false),
                     shellSuAdbOnlyStatus = shellSuAdbOnlyStatus,
-                    isShellSuAdbOnlyEnabled = isShellSuAdbOnlyEnabled,
+                    isShellSuAdbOnlyEnabled = demoPrefs.getBoolean("isShellSuAdbOnlyEnabled", false),
                     kernelUmountStatus = kernelUmountStatus,
-                    isKernelUmountEnabled = isKernelUmountEnabled,
+                    isKernelUmountEnabled = demoPrefs.getBoolean("isKernelUmountEnabled", false),
                     selinuxHideStatus = selinuxHideStatus,
-                    isSelinuxHideEnabled = isSelinuxHideEnabled,
+                    isSelinuxHideEnabled = demoPrefs.getBoolean("isSelinuxHideEnabled", false),
                     sulogStatus = sulogStatus,
-                    isSulogEnabled = isSulogEnabled,
-                    isDefaultUmountModules = isDefaultUmountModules,
+                    isSulogEnabled = demoPrefs.getBoolean("isSulogEnabled", false),
+                    isDefaultUmountModules = demoPrefs.getBoolean("isDefaultUmountModules", false),
                     isLkmMode = isLkmMode,
-                    autoJailbreak = autoJailbreak,
-                    useSoftReboot = useSoftReboot,
+                    autoJailbreak = demoPrefs.getBoolean("autoJailbreak", false),
+                    useSoftReboot = demoPrefs.getBoolean("useSoftReboot", false),
                     isLateLoadMode = isLateLoadMode,
                 )
             }
@@ -270,107 +271,47 @@ class SettingsViewModel(
     }
 
     fun setSuCompatMode(mode: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            when (mode) {
-                0 -> if (repo.setSuEnabled(true)) {
-                    repo.execKsudFeatureSave()
-                    repo.setSuCompatModePref(0)
-                    _uiState.update { it.copy(suCompatMode = 0, isSuEnabled = true) }
-                }
-
-                1 -> if (repo.setSuEnabled(true)) {
-                    repo.execKsudFeatureSave()
-                    if (repo.setSuEnabled(false)) {
-                        // "Disable until reboot" implies it should be enabled on next boot.
-                        // We set the preference to 0 (Enabled) to match the persistent state.
-                        repo.setSuCompatModePref(0)
-                        _uiState.update { it.copy(suCompatMode = 1, isSuEnabled = false) }
-                    }
-                }
-
-                2 -> if (repo.setSuEnabled(false)) {
-                    repo.execKsudFeatureSave()
-                    repo.setSuCompatModePref(2)
-                    _uiState.update { it.copy(suCompatMode = 2, isSuEnabled = false) }
-                }
-            }
-        }
+        demoPrefs.edit().putInt("suCompatMode", mode).apply()
+        _uiState.update { it.copy(suCompatMode = mode, isSuEnabled = mode == 0) }
     }
 
     fun setKernelUmountEnabled(enabled: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (repo.setKernelUmountEnabled(enabled)) {
-                repo.execKsudFeatureSave()
-                _uiState.update { it.copy(isKernelUmountEnabled = enabled) }
-            }
-        }
+        demoPrefs.edit().putBoolean("isKernelUmountEnabled", enabled).apply()
+        _uiState.update { it.copy(isKernelUmountEnabled = enabled) }
     }
 
     fun setSelinuxHideEnabled(enabled: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val status = repo.setSelinuxHideEnabled(enabled)
-            repo.execKsudFeatureSave()
-            _uiState.update { it.copy(isSelinuxHideEnabled = enabled) }
-            when (status) {
-                0 -> {}
-                -OsConstants.EAGAIN -> {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(ksuApp, R.string.settings_selinux_hide_reboot_required,
-                            Toast.LENGTH_LONG).show()
-                    }
-                }
-                else -> {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(ksuApp, ksuApp.getString(R.string.settings_selinux_hide_failed, status),
-                            Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-        }
+        demoPrefs.edit().putBoolean("isSelinuxHideEnabled", enabled).apply()
+        _uiState.update { it.copy(isSelinuxHideEnabled = enabled) }
     }
 
     fun setAutoJailbreak(enabled: Boolean) {
-        repo.autoJailbreak = enabled
+        demoPrefs.edit().putBoolean("autoJailbreak", enabled).apply()
         _uiState.update { it.copy(autoJailbreak = enabled) }
     }
 
     fun setUseSoftReboot(enabled: Boolean) {
-        repo.useSoftReboot = enabled
+        demoPrefs.edit().putBoolean("useSoftReboot", enabled).apply()
         _uiState.update { it.copy(useSoftReboot = enabled) }
     }
 
     fun setSulogEnabled(enabled: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (repo.setSulogEnabled(enabled)) {
-                repo.execKsudFeatureSave()
-                _uiState.update { it.copy(isSulogEnabled = enabled) }
-            }
-        }
+        demoPrefs.edit().putBoolean("isSulogEnabled", enabled).apply()
+        _uiState.update { it.copy(isSulogEnabled = enabled) }
     }
 
     fun setShellSuAdbOnlyEnabled(enabled: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (repo.setShellSuAdbOnlyEnabled(enabled)) {
-                repo.execKsudFeatureSave()
-                _uiState.update { it.copy(isShellSuAdbOnlyEnabled = enabled) }
-            }
-        }
+        demoPrefs.edit().putBoolean("isShellSuAdbOnlyEnabled", enabled).apply()
+        _uiState.update { it.copy(isShellSuAdbOnlyEnabled = enabled) }
     }
 
     fun setAdbRootEnabled(enabled: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (repo.setAdbRootEnabled(enabled)) {
-                repo.execKsudFeatureSave()
-                _uiState.update { it.copy(isAdbRootEnabled = enabled) }
-            }
-        }
+        demoPrefs.edit().putBoolean("isAdbRootEnabled", enabled).apply()
+        _uiState.update { it.copy(isAdbRootEnabled = enabled) }
     }
 
     fun setDefaultUmountModules(enabled: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (repo.setDefaultUmountModules(enabled)) {
-                _uiState.update { it.copy(isDefaultUmountModules = enabled) }
-            }
-        }
+        demoPrefs.edit().putBoolean("isDefaultUmountModules", enabled).apply()
+        _uiState.update { it.copy(isDefaultUmountModules = enabled) }
     }
 }

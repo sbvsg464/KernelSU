@@ -221,7 +221,7 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_sucompat_summary)
                             }
                             OverlayDropdownPreference(
-                                title = stringResource(id = R.string.settings_sucompat),
+                                title = stringResource(id = R.string.settings_sucompat) + "（演示）",
                                 summary = suSummary,
                                 items = suCompatModeItems,
                                 startAction = {
@@ -244,7 +244,7 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_kernel_umount_summary)
                             }
                             SwitchPreference(
-                                title = stringResource(id = R.string.settings_kernel_umount),
+                                title = stringResource(id = R.string.settings_kernel_umount) + "（演示）",
                                 summary = umountSummary,
                                 startAction = {
                                     Icon(
@@ -266,7 +266,7 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_selinux_hide_summary)
                             }
                             SwitchPreference(
-                                title = stringResource(id = R.string.settings_selinux_hide),
+                                title = stringResource(id = R.string.settings_selinux_hide) + "（演示）",
                                 summary = selinuxHideSummary,
                                 startAction = {
                                     Icon(
@@ -288,14 +288,14 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_sulog_summary)
                             }
                             SwitchPreference(
-                                title = stringResource(id = R.string.settings_sulog),
+                                title = stringResource(id = R.string.settings_sulog) + "（演示）",
                                 summary = sulogSummary,
                                 startAction = {
                                     Icon(
                                         Icons.AutoMirrored.Rounded.Article,
                                         modifier = Modifier.padding(end = 6.dp),
                                         contentDescription = stringResource(id = R.string.settings_sulog),
-                                        tint = if (uiState.sulogStatus == "supported") colorScheme.onBackground else colorScheme.disabledOnSecondaryVariant
+                                        tint = colorScheme.onBackground
                                     )
                                 },
                                 enabled = true,
@@ -310,7 +310,7 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_adb_root_summary)
                             }
                             SwitchPreference(
-                                title = stringResource(id = R.string.settings_adb_root),
+                                title = stringResource(id = R.string.settings_adb_root) + "（演示）",
                                 summary = adbRootSummary,
                                 startAction = {
                                     Icon(
@@ -332,14 +332,14 @@ fun SettingPagerMiuix(
                                 else -> stringResource(id = R.string.settings_shell_su_adb_only_summary)
                             }
                             SwitchPreference(
-                                title = stringResource(id = R.string.settings_shell_su_adb_only),
+                                title = stringResource(id = R.string.settings_shell_su_adb_only) + "（演示）",
                                 summary = shellSuAdbOnlySummary,
                                 startAction = {
                                     Icon(
                                         Icons.Rounded.VerifiedUser,
                                         modifier = Modifier.padding(end = 6.dp),
                                         contentDescription = stringResource(id = R.string.settings_shell_su_adb_only),
-                                        tint = if (uiState.shellSuAdbOnlyStatus == "supported") colorScheme.onBackground else colorScheme.disabledOnSecondaryVariant
+                                        tint = colorScheme.onBackground
                                     )
                                 },
                                 enabled = true,
