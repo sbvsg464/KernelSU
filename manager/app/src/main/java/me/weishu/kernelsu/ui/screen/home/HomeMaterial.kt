@@ -210,7 +210,7 @@ private fun StatusCard(
             else -> Icons.Rounded.Block
         }
         val statusTitle = when {
-            ksuActive -> stringResource(R.string.home_working)
+            ksuActive -> "${stringResource(R.string.home_working)} [${stringResource(R.string.jailbreak_mode)}]"
             notInstalled -> stringResource(R.string.home_not_installed)
             else -> stringResource(R.string.home_unsupported)
         }
@@ -219,7 +219,7 @@ private fun StatusCard(
             notInstalled -> stringResource(R.string.home_click_to_install)
             else -> stringResource(R.string.home_unsupported_reason)
         }
-        val workingMode = "LKM[${stringResource(R.string.jailbreak_mode)}]"
+        val workingMode = "LKM"
         val statusTrailing: (@Composable () -> Unit)? = if (ksuActive && workingMode.isNotEmpty()) {
             {
                 StatusTag(

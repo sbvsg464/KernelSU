@@ -249,11 +249,11 @@ private fun StatusCard(
                     if (state.isSafeMode) {
                         append(" [${stringResource(id = R.string.safe_mode)}]")
                     }
-                    if (state.isLateLoadMode) {
+                    if (true) {
                         append(" [${stringResource(id = R.string.jailbreak_mode)}]")
                     }
                 }
-                val workingMode = "LKM[${stringResource(R.string.jailbreak_mode)}]"
+                val workingMode = "LKM"
                 val workingText = "${stringResource(id = R.string.home_working)}$workingState"
 
                 Row(
