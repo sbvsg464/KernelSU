@@ -126,9 +126,6 @@ fun HomePagerMaterial(
                     onClick = actions.onInstallClick,
                 )
             }
-            if (state.showRootWarning) {
-                WarningCard(stringResource(id = R.string.grant_root_failed))
-            }
             StatusCard(
                 state = state,
                 actions = actions,

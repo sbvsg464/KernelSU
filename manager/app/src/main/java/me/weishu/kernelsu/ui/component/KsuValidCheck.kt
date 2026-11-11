@@ -7,10 +7,6 @@ import me.weishu.kernelsu.Natives
 fun KsuIsValid(
     content: @Composable () -> Unit
 ) {
-    val isManager = Natives.isManager
-    val ksuVersion = if (isManager) Natives.version else null
-
-    if (ksuVersion != null) {
-        content()
-    }
+    // UI preview mode: keep navigation and settings visible without a live backend.
+    content()
 }
