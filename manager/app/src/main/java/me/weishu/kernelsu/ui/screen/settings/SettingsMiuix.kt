@@ -232,7 +232,7 @@ fun SettingPagerMiuix(
                                         tint = colorScheme.onBackground
                                     )
                                 },
-                                enabled = uiState.suCompatStatus == "supported",
+                                enabled = true,
                                 selectedIndex = uiState.suCompatMode,
                                 onSelectedIndexChange = actions.onSetSuCompatMode
                             )

@@ -193,7 +193,7 @@ fun SettingPagerMaterial(
                                 title = stringResource(id = R.string.settings_sucompat),
                                 summary = suSummary,
                                 items = suCompatModeItems,
-                                enabled = uiState.suCompatStatus == "supported",
+                                enabled = true,
                                 selectedIndex = uiState.suCompatMode,
                                 onItemSelected = actions.onSetSuCompatMode
                             )
