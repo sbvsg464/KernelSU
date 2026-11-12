@@ -24,17 +24,6 @@ fun SuperUserPager(
     bottomInnerPadding: Dp,
     isCurrentPage: Boolean = true,
 ) {
-    val consentPrefs = rememberSaveable { mutableStateOf(me.weishu.kernelsu.ksuApp.getSharedPreferences("app_list_consent", 0).getBoolean("accepted", false)) }
-    if (!consentPrefs.value) {
-        androidx.compose.material3.AlertDialog(
-            onDismissRequest = {},
-            title = { androidx.compose.material3.Text("访问应用列表") },
-            text = { androidx.compose.material3.Text("允许访问已安装应用列表？") },
-            confirmButton = { androidx.compose.material3.TextButton(onClick = { me.weishu.kernelsu.ksuApp.getSharedPreferences("app_list_consent", 0).edit().putBoolean("accepted", true).apply(); consentPrefs.value = true }) { androidx.compose.material3.Text("允许") } },
-            dismissButton = { androidx.compose.material3.TextButton(onClick = { navigator.pop() }) { androidx.compose.material3.Text("取消") } },
-        )
-        return
-    }
     val viewModel = viewModel<SuperUserViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val latestIsCurrentPage by rememberUpdatedState(isCurrentPage)

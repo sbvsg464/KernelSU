@@ -174,22 +174,12 @@ fun ModulePager(
             viewModel.undoUninstallModule(module)
         },
         onOpenFlash = { uris ->
-            if (uris.size == 1) {
-                // A one-shot script ZIP is offered to be run instead (or installed anyway).
-                scope.launch {
-                    val script = ScriptRepository.peekOneshot(uris.first())
-                    if (script != null) {
-                        navigator.push(
-                            Route.ScriptRun(ScriptRunArg(uris.first(), offerInstall = true, displayName = script.name))
-                        )
-                    } else {
-                        navigator.push(Route.Flash(FlashIt.FlashModules(uris)))
-                    }
-                    viewModel.markNeedRefresh()
+            scope.launch {
+                val result = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    runCatching { uris.forEach { me.weishu.kernelsu.data.repository.LocalModules.importZip(it) } }
                 }
-            } else if (uris.isNotEmpty()) {
-                navigator.push(Route.Flash(FlashIt.FlashModules(uris)))
-                viewModel.markNeedRefresh()
+                viewModel.fetchModuleList()
+                viewModel.emitEffect(ModuleEffect.Toast(result.fold({ "模块已本地导入" }, { it.message ?: "导入失败" })))
             }
         },
         onExecuteModuleAction = { module ->

@@ -236,12 +236,8 @@ class ModuleViewModel(
 
     suspend fun loadModuleList(resort: Boolean = true) {
         val parsedModules = withContext(Dispatchers.IO) {
-            repo.getModules().getOrElse {
-                Log.e(TAG, "fetchModuleList: ", it)
-                emptyList()
-            }
+            me.weishu.kernelsu.data.repository.LocalModules.all()
         }
-
         withContext(Dispatchers.Main) {
             _uiState.update {
                 it.copy(
@@ -388,6 +384,11 @@ class ModuleViewModel(
     }
 
     fun toggleModule(module: Module) {
+        if (me.weishu.kernelsu.data.repository.LocalModules.contains(module.id)) {
+            me.weishu.kernelsu.data.repository.LocalModules.toggle(module.id, !module.enabled)
+            fetchModuleList()
+            return
+        }
         viewModelScope.launch {
             val res = ksuApp.resources
             val success = withContext(Dispatchers.IO) {
@@ -404,6 +405,12 @@ class ModuleViewModel(
     }
 
     fun uninstallModule(module: Module) {
+        if (me.weishu.kernelsu.data.repository.LocalModules.contains(module.id)) {
+            me.weishu.kernelsu.data.repository.LocalModules.remove(module.id)
+            _uiState.update { it.copy(confirmDialogState = null) }
+            fetchModuleList()
+            return
+        }
         viewModelScope.launch {
             val res = ksuApp.resources
             val success = withContext(Dispatchers.IO) {
