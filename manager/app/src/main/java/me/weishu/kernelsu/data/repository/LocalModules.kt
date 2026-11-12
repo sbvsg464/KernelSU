@@ -11,7 +11,7 @@ object LocalModules {
     fun all(): List<Module> = prefs.all.values.mapNotNull { value -> runCatching {
         val o = JSONObject(value as String)
         Module(o.getString("id"), o.getString("name"), o.optString("author"), o.optString("version"), o.optInt("versionCode"),
-            "[本地导入] " + o.optString("description"), o.optBoolean("enabled", true), false, false, "", false, false, false, null, null)
+            o.optString("description"), o.optBoolean("enabled", true), false, false, "", false, false, false, null, null)
     }.getOrNull() }
     fun toggle(id: String, enabled: Boolean) { val o = JSONObject(prefs.getString(id, "{}")!!); o.put("enabled", enabled); prefs.edit().putString(id, o.toString()).apply() }
     fun remove(id: String) { prefs.edit().remove(id).apply() }

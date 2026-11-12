@@ -179,7 +179,7 @@ fun ModulePager(
                     runCatching { uris.forEach { me.weishu.kernelsu.data.repository.LocalModules.importZip(it) } }
                 }
                 viewModel.fetchModuleList()
-                viewModel.emitEffect(ModuleEffect.Toast(result.fold({ "模块已本地导入" }, { it.message ?: "导入失败" })))
+                viewModel.emitEffect(ModuleEffect.Toast(result.fold({ "导入完成" }, { it.message ?: "导入失败" })))
             }
         },
         onExecuteModuleAction = { module ->
